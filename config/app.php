@@ -227,6 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'JWT' => App\Facades\JWT::class,
+        'Series' => App\Facades\Series::class,
     ],
 
 ];
