@@ -228,6 +228,7 @@ return [
 
         'JWT' => App\Facades\JWT::class,
         'Series' => App\Facades\Series::class,
+        'Transaction' => App\Facades\Transaction::class,
     ],
 
 ];
