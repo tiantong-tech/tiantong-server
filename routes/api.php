@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,4 +19,14 @@ Route::get('/', function () {
 	return [
 		'message' => '天瞳系统 v1.0'
 	];
+});
+
+Route::post('/users/login/email', 'UserController@loginByEmail');
+Route::post('/users/create', 'UserController@create')->middleware('auth:root');
+Route::post('/users/delete', 'UserController@delete')->middleware('auth:root');
+
+Route::middleware('auth')->group(function() {
+	Route::post('/users/profile', 'UserController@getProfile');
+	Route::post('/users/update',  'UserController@update');
+	Route::post('/users/search', 'UserController@search');
 });

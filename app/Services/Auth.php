@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use JWT;
 use Hash;
 use App\Models\User;
 
@@ -34,7 +33,7 @@ class Auth
     if ($user && Hash::check($password, $user->password)) {
       return $user->id;
     } else {
-      return false;
+      return 0;
     }
   }
 }
