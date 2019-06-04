@@ -2,20 +2,29 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use JWT;
+use Auth;
+use Closure;
 
-class Authenticate extends Middleware
+class Authenticate
 {
-    /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     */
-    protected function redirectTo($request)
-    {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
-    }
+	public function handle($request, Closure $next)
+	{
+		$token = request()->header('authorization');
+		$payload = JWT::decode($token);
+		if (!$token || !$payload) {
+			return response([
+				'message' => 'fail_to_authenticate_token'
+			], 401);
+		};
+
+		Auth::findUser($payload['aud']);
+		if (!Auth::user()) {
+			return response([
+				'message' => 'fail_to_find_user_by_token'
+			]);
+		}
+
+		return $next($request);
+	}
 }
