@@ -26,7 +26,7 @@ class UserTest extends BaseTest
 	 */
 	public function testLoginByEmail($params)
 	{
-		$response = $this->post('users/login/email', $params);
+		$response = $this->post('login/email', $params);
 		$response->assertStatus(201);
 		$token = $response->decodeResponseJson()['token'];
 
@@ -39,7 +39,7 @@ class UserTest extends BaseTest
 	public function testGetProfile($token)
 	{
 		$response = $this->withToken($token)
-			->post('users/profile');
+			->post('person');
 
 		$response->assertStatus(200);
 	}
@@ -50,7 +50,7 @@ class UserTest extends BaseTest
 	public function testUpdate($token)
 	{
 		$response = $this->withToken($token)
-			->post('users/update', ['first_name' => '']);
+			->post('person/update', ['first_name' => '']);
 		$response->assertStatus(201);
 	}
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use JWT;
 use Hash;
 use App\Models\User;
 
@@ -31,9 +32,9 @@ class Auth
       ->first();
 
     if ($user && Hash::check($password, $user->password)) {
-      return $user->id;
+      return JWT::encode(['aud' => $user->id]);
     } else {
-      return 0;
+      return '';
     }
   }
 }

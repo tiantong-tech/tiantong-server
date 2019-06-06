@@ -21,12 +21,15 @@ Route::get('/', function () {
 	];
 });
 
-Route::post('/users/login/email', 'UserController@loginByEmail');
-Route::post('/users/create', 'UserController@create')->middleware('auth:root');
-Route::post('/users/delete', 'UserController@delete')->middleware('auth:root');
+Route::post('/login/email', 'UserController@loginByEmail');
+
+Route::middleware('auth:root')->group(function() {
+	Route::post('/users/search', 'UserController@search');
+	Route::post('/users/create', 'UserController@create');
+	Route::post('/users/delete', 'UserController@delete');	
+});
 
 Route::middleware('auth')->group(function() {
-	Route::post('/users/profile', 'UserController@getProfile');
-	Route::post('/users/update',  'UserController@update');
-	Route::post('/users/search', 'UserController@search');
+	Route::post('person', 'PersonController@search');
+	Route::post('person/update',  'PersonController@update');
 });
