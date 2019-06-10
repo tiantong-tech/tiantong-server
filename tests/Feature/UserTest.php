@@ -50,7 +50,7 @@ class UserTest extends BaseTest
 	public function testUpdate($token)
 	{
 		$response = $this->withToken($token)
-			->post('person/update', ['first_name' => '']);
+			->post('person/update', ['name' => '']);
 		$response->assertStatus(201);
 	}
 

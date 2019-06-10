@@ -14,8 +14,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable()->unique();
             $table->string('password');
             $table->jsonb('groups')->default('[]');
-            $table->string('first_name')->nullable();
-            $table->string('second_name')->nullable();
+            $table->string('name')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }

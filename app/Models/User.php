@@ -22,7 +22,7 @@ class User extends Model
 	];
 
 	protected $fillable = [
-    'first_name', 'second_name',
+    'name',
 	];
 
   protected $hidden = [
