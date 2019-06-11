@@ -11,6 +11,7 @@ class RootSeeder extends Seeder
 		$user->type = 'root';
 		$user->username = 'root';
 		$user->password = '123456';
+		$user->email = 'root@tiantong.com';
 		$user->save();
 	}
 }
