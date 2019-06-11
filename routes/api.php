@@ -15,11 +15,7 @@
 // 	return $request->user();
 // });
 
-Route::get('/', function () {
-	return [
-		'message' => '天瞳系统 v1.0'
-	];
-});
+Route::get('/', 'AppController@home');
 
 Route::post('/login/email', 'PersonController@loginByEmail');
 
