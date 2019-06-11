@@ -21,7 +21,7 @@ Route::get('/', function () {
 	];
 });
 
-Route::post('/login/email', 'UserController@loginByEmail');
+Route::post('/login/email', 'PersonController@loginByEmail');
 
 Route::middleware('auth:root')->group(function() {
 	Route::post('/users/search', 'UserController@search');

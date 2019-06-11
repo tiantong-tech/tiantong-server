@@ -20,4 +20,20 @@ class PersonController extends Controller
 
     return $this->success('success_to_update_user');
   }
+
+  public function loginByEmail()
+  {
+    $password = $this->get('password', 'string');
+    $where = ['email' => $this->get('email', 'email')];
+
+    $token = Auth::matchPassword($password, $where);
+    if (!$token) {
+      return $this->failure('fail_to_login_by_email', 401);
+    }
+
+    return $this->success([
+      'message' => 'success_to_login',
+      'token' => $token
+    ]);
+  }
 }

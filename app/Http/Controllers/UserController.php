@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
@@ -38,21 +37,5 @@ class UserController extends Controller
   public function search()
   {
     return User::all();
-  }
-
-  public function loginByEmail()
-  {
-    $password = $this->get('password', 'string');
-    $where = ['email' => $this->get('email', 'email')];
-
-    $token = Auth::matchPassword($password, $where);
-    if (!$token) {
-      return $this->fail('fail_to_login_by_email', 401);
-    }
-
-    return $this->success([
-      'message' => 'success_to_login',
-      'token' => $token
-    ]);
   }
 }
