@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Enums;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +14,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('username')->nullable()->unique();
             $table->string('password');
-            $table->jsonb('groups')->default('[]');
+            $table->enum('role', Enums::roles);
             $table->string('name')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });

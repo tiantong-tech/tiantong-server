@@ -17,10 +17,6 @@ class User extends Model
 
   public $timestamps = false;
 
-	protected $casts = [
-    'groups' => 'array',
-	];
-
 	protected $fillable = [
     'name',
 	];
@@ -30,10 +26,10 @@ class User extends Model
 	];
 
   // 根据 type 类型自动设置 id 及 groups
-  public function setTypeAttribute($type)
+  public function setAutoRoleAttribute($role)
   {
-    $this->attributes['groups'] = json_encode([$type]);
-    $this->attributes['id'] = Series::generate($type . '_id');
+    $this->attributes['role'] = $role;
+    $this->attributes['id'] = Series::generate($role . '_id');
   }
 
   public function setPasswordAttribute($password)
@@ -41,12 +37,8 @@ class User extends Model
     $this->attributes['password'] = Hash::make($password);
   }
 
-  public function scopeGroups($query, $groups)
+  public function scopeIsRole($query, $role)
   {
-    if (!is_array($groups)) {
-      $groups = json_encode([$groups]);
-    }
-
-    return $query->where('groups', '@>', $groups);
+    return $query->where('role', $role);
   }
 }

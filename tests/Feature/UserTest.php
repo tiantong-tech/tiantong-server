@@ -11,11 +11,12 @@ class UserTest extends BaseTest
 		$params = [
 			'email' => 'test_seller@gmail.com',
 			'password' => '123456',
-			'type' => 'sale',
+			'role' => 'sale',
 			'id' => $this->id
 		];
 		$response = $this->withRoot()
 			->post('/users/create', $params);
+
 		$response->assertStatus(201);
 
 		return $params;

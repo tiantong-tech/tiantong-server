@@ -8,7 +8,7 @@ use Closure;
 
 class Authenticate
 {
-	public function handle($request, Closure $next, $group = null)
+	public function handle($request, Closure $next, $role = null)
 	{
 		$token = request()->header('authorization');
 		$payload = JWT::decode($token);
@@ -26,10 +26,10 @@ class Authenticate
 			], 401);
 		}
 
-		$isRoot = in_array('root', $user->groups);
-		if ($group && !$isRoot) {
-			$inGroup = in_array($group, $user->groups);
-			if (!$inGroup) {
+		$hasRole = $role !== null;
+		$isRoot = $user->role === 'root';
+		if ($hasRole && !$isRoot) {
+			if ($role !== $user->role) {
 				return $this->failure('fail_to_validate_user_group');
 			}
 		}

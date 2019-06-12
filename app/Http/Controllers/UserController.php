@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\Enums;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-  private $groups = ['sale'];
-
   public function create()
   {
     $email = $this->get('email', 'email');
     $password = $this->get('password', 'string');
-    $type = $this->get('type', Rule::in($this->groups));
+    $role = $this->get('role', Rule::in(Enums::roles));
     $id = $this->get('id', 'nullable|integer');
 
     $user = new User();
-    $user->type = $type;
     $user->email = $email;
+    $user->autoRole = $role;
     $user->password = $password;
     if ($id) $user->id = $id;
     $user->save();

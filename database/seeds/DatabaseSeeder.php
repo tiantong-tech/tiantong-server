@@ -7,7 +7,7 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 		$this->call(SeriesSeeder::class);
-		$this->call(RootSeeder::class);
+		$this->call(UserSeeder::class);
 
 		if (env('APP_ENV') === 'local') return;
 
