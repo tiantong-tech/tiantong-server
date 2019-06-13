@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use JWT;
 use Auth;
 
 class PersonController extends Controller
 {
-  public function search()
+  public function getProfile()
   {
-    $user = Auth::user();
+    $result = [];
+    $result['user'] = Auth::user();
 
-    return $user;
+    if (JWT::isNeedToRefresh()) {
+      $result['token'] = JWT::refresh();
+    }
+
+    return $result;
   }
 
   public function update()
@@ -29,6 +35,21 @@ class PersonController extends Controller
     $token = Auth::matchPassword($password, $where);
     if (!$token) {
       return $this->failure('fail_to_login_by_email', 401);
+    }
+
+    return $this->success([
+      'message' => 'success_to_login',
+      'token' => $token
+    ]);
+  }
+
+  public function loginByUsername()
+  {
+    $password = $this->get('password', 'required|string');
+    $where = ['username' => $this->get('username', 'required')];
+    $token = Auth::matchPassword($password, $where);
+    if (!$token) {
+      return $this->failure('fail_to_login_by_username', 401);
     }
 
     return $this->success([

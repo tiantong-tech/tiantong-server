@@ -40,7 +40,7 @@ class UserTest extends BaseTest
 	public function testGetProfile($token)
 	{
 		$response = $this->withToken($token)
-			->post('person');
+			->post('profile');
 
 		$response->assertStatus(200);
 	}

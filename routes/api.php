@@ -18,6 +18,7 @@
 Route::get('/', 'AppController@home');
 
 Route::post('/login/email', 'PersonController@loginByEmail');
+Route::post('/login/username', 'PersonController@loginByUsername');
 
 Route::middleware('auth:root')->group(function() {
 	Route::post('/users/search', 'UserController@search');
@@ -26,8 +27,8 @@ Route::middleware('auth:root')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
-	Route::post('person', 'PersonController@search');
-	Route::post('person/update',  'PersonController@update');
+	Route::post('/profile', 'PersonController@getProfile');
+	Route::post('/person/update',  'PersonController@update');
 });
 
 Route::post('/sale/tracks/create', 'SaleTrackController@create');
