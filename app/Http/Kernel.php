@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'cors',
         ]
     ];
 
@@ -62,6 +63,7 @@ class Kernel extends HttpKernel
 
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.sale' => \App\Http\Middleware\AuthSale::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class,
     ];
 
     /**
