@@ -19,17 +19,7 @@ class Controller extends BaseController
 			throw new \Illuminate\Validation\ValidationException($validator);
 		}
 
-		$result = [];
-
-		foreach ($rules as $key => $value) {
-			if (isset($params[$key])) {
-				$result[$key] = $params[$key];
-			} else {
-				$result[$key] = null;
-			}
-		}
-
-		return $result;
+		return $params;
 	}
 
 	public function via(array $rules)

@@ -6,7 +6,7 @@ use JWT;
 use Auth;
 use Closure;
 
-class Authenticate
+class Authenticate extends Middleware
 {
 	public function handle($request, Closure $next, $role = null)
 	{
@@ -30,15 +30,10 @@ class Authenticate
 		$isRoot = $user->role === 'root';
 		if ($hasRole && !$isRoot) {
 			if ($role !== $user->role) {
-				return $this->failure('fail_to_validate_user_group');
+				return $this->failure('fail_to_validate_user_role', 401);
 			}
 		}
 
 		return $next($request);
-	}
-
-	private function failure($message)
-	{
-		return response(['message' => $message], 401);
 	}
 }
