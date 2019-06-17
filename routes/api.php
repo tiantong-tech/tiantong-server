@@ -27,8 +27,8 @@ Route::middleware('auth:root')->group(function() {
 });
 
 Route::middleware('auth')->group(function() {
-	Route::post('/profile', 'PersonController@getProfile');
-	Route::post('/person/update',  'PersonController@update');
+	Route::post('/user/profile', 'PersonController@getProfile');
+	Route::post('/user/update',  'PersonController@update');
 });
 
 Route::post('/sale/tracks/create', 'SaleTrackController@create');
