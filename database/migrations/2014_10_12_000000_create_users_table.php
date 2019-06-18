@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('username')->nullable()->unique();
             $table->string('password');
-            $table->enum('role', Enums::roles);
+            $table->jsonb('groups')->default('[]');
             $table->string('name')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });

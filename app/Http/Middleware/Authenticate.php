@@ -8,7 +8,7 @@ use Closure;
 
 class Authenticate extends Middleware
 {
-	public function handle($request, Closure $next, $role = null)
+	public function handle($request, Closure $next, ...$groups)
 	{
 		$token = request()->header('authorization');
 		$payload = JWT::decode($token);
@@ -26,12 +26,14 @@ class Authenticate extends Middleware
 			], 401);
 		}
 
-		$hasRole = $role !== null;
-		$isRoot = $user->role === 'root';
-		if ($hasRole && !$isRoot) {
-			if ($role !== $user->role) {
-				return $this->failure('fail_to_validate_user_role', 401);
+		if (sizeof($groups)) {
+			foreach ($user->groups as $group) {
+				if (in_array($group, $groups)) {
+					return $next($request);
+				}
 			}
+
+			return $this->failure('fail_to_validate_user_role', 401);
 		}
 
 		return $next($request);

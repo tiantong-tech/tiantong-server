@@ -8,7 +8,7 @@ class UserSeeder extends Seeder
 	public function run()
 	{
 		$user = new User;
-		$user->autoRole = 'root';
+		$user->autoGroup = 'root';
 		$user->username = 'root';
 		$user->password = '123456';
 		$user->email = 'root@tiantong.com';

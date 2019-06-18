@@ -11,7 +11,7 @@ class UserTest extends BaseTest
 		$params = [
 			'email' => 'test_seller@gmail.com',
 			'password' => '123456',
-			'role' => 'sale',
+			'group' => 'sale',
 			'id' => $this->id
 		];
 		$response = $this->withRoot()

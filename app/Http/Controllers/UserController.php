@@ -12,12 +12,12 @@ class UserController extends Controller
   {
     $email = $this->get('email', 'email');
     $password = $this->get('password', 'string');
-    $role = $this->get('role', Rule::in(Enums::roles));
+    $role = $this->get('group', Rule::in(Enums::roles));
     $id = $this->get('id', 'nullable|integer');
 
     $user = new User();
+    $user->autoGroup = $role;
     $user->email = $email;
-    $user->autoRole = $role;
     $user->password = $password;
     if ($id) $user->id = $id;
     $user->save();

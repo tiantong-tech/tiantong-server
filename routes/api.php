@@ -16,11 +16,12 @@
 // });
 
 Route::get('/', 'AppController@home');
+Route::get('/api', 'AppController@home');
 
 Route::post('/login/email', 'PersonController@loginByEmail');
 Route::post('/login/username', 'PersonController@loginByUsername');
 
-Route::middleware('auth:root')->group(function() {
+Route::middleware('auth:root,admin')->group(function() {
 	Route::post('/users/search', 'UserController@search');
 	Route::post('/users/create', 'UserController@create');
 	Route::post('/users/delete', 'UserController@delete');	
@@ -33,7 +34,7 @@ Route::middleware('auth')->group(function() {
 
 Route::post('/sale/tracks/create', 'SaleTrackController@create');
 
-Route::middleware(['auth', 'auth.sale'])->group(function() {
+Route::middleware('auth.root,admin,sale')->group(function() {
 	Route::post('/sale/tracks/create', 'SaleTrackController@create');
 	Route::post('/sale/tracks/delete', 'SaleTrackController@delete');
 	Route::post('/sale/tracks/update', 'SaleTrackController@update');

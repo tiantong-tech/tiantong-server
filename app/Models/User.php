@@ -17,6 +17,10 @@ class User extends Model
 
   public $timestamps = false;
 
+  public $casts = [
+    'groups' => 'array'
+  ];
+
 	protected $fillable = [
     'name',
 	];
@@ -26,10 +30,10 @@ class User extends Model
 	];
 
   // 根据 type 类型自动设置 id 及 groups
-  public function setAutoRoleAttribute($role)
+  public function setAutoGroupAttribute($group)
   {
-    $this->attributes['role'] = $role;
-    $this->attributes['id'] = Series::generate($role . '_id');
+    $this->attributes['groups'] = json_encode([$group]);
+    $this->attributes['id'] = Series::generate($group . '_id');
   }
 
   public function setPasswordAttribute($password)
