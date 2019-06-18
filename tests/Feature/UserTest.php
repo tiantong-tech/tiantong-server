@@ -9,10 +9,11 @@ class UserTest extends BaseTest
 	public function testCreate()
 	{
 		$params = [
-			'email' => 'test_seller@gmail.com',
+			'type' => 'sale',
+			'id' => $this->id,
 			'password' => '123456',
-			'group' => 'sale',
-			'id' => $this->id
+			'username' => 'test_username',
+			'email' => 'test_seller@gmail.com',
 		];
 		$response = $this->withRoot()
 			->post('/users/create', $params);
@@ -61,7 +62,7 @@ class UserTest extends BaseTest
 	public function testDelete()
 	{
 		$response = $this->withRoot()
-			->post('users/delete', ['id' => $this->id]);
+			->post('users/delete', ['ids' => [$this->id]]);
 
 		$response->assertStatus(201);
 	}

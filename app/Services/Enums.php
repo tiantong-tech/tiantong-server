@@ -4,7 +4,7 @@ namespace App\Services;
 
 class Enums
 {
-  const roles = [
+  const groups = [
     'root', 'admin', 'sale',
   ];
 

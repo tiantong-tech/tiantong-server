@@ -14,7 +14,7 @@ class Authenticate extends Middleware
 		$payload = JWT::decode($token);
 		if (!$token || !$payload) {
 			return response([
-				'message' => 'fail_to_authenticate_token'
+				'message' => 'fail to authenticate token'
 			], 401);
 		};
 
@@ -22,7 +22,7 @@ class Authenticate extends Middleware
 
 		if (!$user) {
 			return response([
-				'message' => 'fail_to_find_user_by_token'
+				'message' => 'fail to find user by token'
 			], 401);
 		}
 
@@ -33,7 +33,7 @@ class Authenticate extends Middleware
 				}
 			}
 
-			return $this->failure('fail_to_validate_user_role', 401);
+			return $this->failure('fail to validate user groups', 403);
 		}
 
 		return $next($request);

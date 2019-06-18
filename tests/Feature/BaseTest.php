@@ -15,6 +15,6 @@ abstract class BaseTest extends TestCase
 
   protected function withRoot()
   {
-    return $this->withHeader('Authorization', JWT::encode(['aud' => 1]));
+    return $this->withHeader('Authorization', JWT::encode(['aud' => 1000]));
   }
 }

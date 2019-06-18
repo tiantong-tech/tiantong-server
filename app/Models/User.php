@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Hash;
 use Series;
-use Illuminate\Database\Eloquent\Model;
+use App\Override\Model;
 // use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,11 +26,11 @@ class User extends Model
 	];
 
   protected $hidden = [
-		'password', 'created_at',
+		'password',
 	];
 
-  // 根据 type 类型自动设置 id 及 groups
-  public function setAutoGroupAttribute($group)
+  // 根据 type 类型自动推断 id 及 groups
+  public function setTypeAttribute($group)
   {
     $this->attributes['groups'] = json_encode([$group]);
     $this->attributes['id'] = Series::generate($group . '_id');
@@ -39,6 +39,21 @@ class User extends Model
   public function setPasswordAttribute($password)
   {
     $this->attributes['password'] = Hash::make($password);
+  }
+
+  public function scopeQuery($query, $text)
+  {
+    $columns = ['username', 'email', 'name', 'id'];
+    foreach ($columns as $column) {
+      $query->orWhere($column, 'like', '%' . $text . '%');
+    }
+
+    return $query;
+  }
+
+  public function scopeWithoutRoot($query)
+  {
+    return $query->whereRaw('(groups @> \'"root"\') = false');
   }
 
   public function scopeIsRole($query, $role)

@@ -39,10 +39,10 @@ class Series
     $sql = 'UPDATE series SET value = value + 1 WHERE name = ? RETURNING "value", "end"';
     $result = DB::select($sql, [$name])[0];
     $end = $result->end;
-    $value = $result->value;
+    $value = $result->value - 1;
 
     if ($value >= $end) {
-      throw new \Exception("Series \"$name\" is overflow, value is $value, end is $end");
+      throw new \Exception("Series \"$name\" is overflow, current value is $value, end is $end");
     }
 
     return $value;
