@@ -13,11 +13,12 @@ class SaleTrack extends Model
   public $timestamps = false;
 
 	protected $casts = [
-    'data' => 'array',
+    'data' => 'json',
 	];
 
 	protected $fillable = [
     'type', 'status', 'name',
-    'phone', 'email', 'message', 'data'
+    'phone', 'email', 'message', 'data',
+    'company', 'phone_number'
 	];
 }

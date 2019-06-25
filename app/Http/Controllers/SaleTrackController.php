@@ -10,20 +10,26 @@ class SaleTrackController extends Controller
 {
   public function create()
   {
-    $data = $this->via([
-      'data' => 'nullable|json',
+    $data = $this->get('data', 'nullable|array');
+
+    $filling = $this->via([
       'name' => 'nullable|string',
-      'phone' => 'nullable|string',
       'email' => 'nullable|email',
       'message' => 'nullable|string',
+      'company' => 'nullable|string',
+      'phone_number' => 'nullable|string',
+      'project_name' => 'nullable|string',
       'type' => ['required', Rule::in(Enums::saleTrackTypes)],
     ]);
 
-    $data = SaleTrack::create($data);
+    $saleTrack = new SaleTrack;
+    $saleTrack->data = $data;
+    $saleTrack->fill($filling);
+    $saleTrack->save();
 
     return $this->success([
       'message' => 'success_to_create_sale_track',
-      'id' => $data->id
+      'id' => $saleTrack->id
     ]);
   }
 
@@ -40,13 +46,14 @@ class SaleTrackController extends Controller
   {
     $id = $this->get('id', 'required|exists:sale_tracks,id');
     $data = $this->via([
-      'data' => 'nullable|json',
       'name' => 'nullable|string',
-      'phone' => 'nullable|string',
       'email' => 'nullable|email',
       'message' => 'nullable|string',
+      'company' => 'nullable|string',
+      'phone_number' => 'nullable|string',
+      'project_name' => 'nullable|string',
       'type' => ['nullable', Rule::in(Enums::saleTrackTypes)],
-      'status' => ['nullable', Rule::in(Enums::saleTrackStatuses)],
+      'status' => ['nullable', Rule::in(Enums::saleTrackStatuses)]
     ]);
 
     $saleTrack = SaleTrack::find($id);
@@ -58,6 +65,11 @@ class SaleTrackController extends Controller
 
   public function search()
   {
-    return SaleTrack::all();
+    $search = $this->get('search', 'nullable|string');
+    $query = SaleTrack::orderBy('id', 'desc');
+    if ($search) {
+      $query->withSearch($search);
+    }
+    return $query->paginate();
   }
 }

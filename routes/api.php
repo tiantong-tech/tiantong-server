@@ -34,8 +34,8 @@ Route::middleware('auth')->group(function() {
 
 Route::post('/sale/tracks/create', 'SaleTrackController@create');
 
-Route::middleware('auth.root,admin,sale')->group(function() {
-	Route::post('/sale/tracks/create', 'SaleTrackController@create');
+Route::post('/sale/tracks/create', 'SaleTrackController@create');
+Route::middleware('auth:root,admin,sale')->group(function() {
 	Route::post('/sale/tracks/delete', 'SaleTrackController@delete');
 	Route::post('/sale/tracks/update', 'SaleTrackController@update');
 	Route::post('/sale/tracks/search', 'SaleTrackController@search');

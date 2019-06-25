@@ -9,7 +9,7 @@ class Enums
   ];
 
   const saleTrackTypes = [
-    '垂直输送及设计图基本参数表',
+    '垂直输送机设计图基本参数表',
   ];
 
   const saleTrackStatuses = [

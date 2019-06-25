@@ -11,14 +11,16 @@ class CreateSaleTracksTable extends Migration
     {
         Schema::create('sale_tracks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamp('created')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
             $table->enum('status', Enums::saleTrackStatuses)->default('确认中');
 
             $table->enum('type', Enums::saleTrackTypes);
             $table->string('name')->nullable();
-            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('message')->nullable();
+            $table->string('company')->nullable();
+            $table->string('project_name')->nullable();
+            $table->string('phone_number')->nullable();
             $table->jsonb('data')->nullable();
         });
     }

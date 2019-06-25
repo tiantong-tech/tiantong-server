@@ -9,9 +9,9 @@ class DatabaseSeeder extends Seeder
 		$this->call(SeriesSeeder::class);
 		$this->call(UserSeeder::class);
 
-		if (env('APP_ENV') === 'local') return;
+		if (env('APP_ENV') !== 'local') return;
 
 		// 本地测试数据
-
+		$this->call(SaleTrackSeeder::class);
 	}
 }
