@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->jsonb('groups')->default('[]');
             $table->string('name')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }

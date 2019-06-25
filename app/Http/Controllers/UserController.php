@@ -45,10 +45,10 @@ class UserController extends Controller
 
   public function search()
   {
-    $queryText = $this->get('query', 'nullable|string');
+    $search = $this->get('search', 'nullable|string');
     $query = User::orderBy('created_at', 'desc');
-    if ($queryText) {
-      $query->query($queryText);
+    if ($search) {
+      $query->withSearch($search);
     }
 
     return $query->paginate();

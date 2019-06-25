@@ -41,11 +41,11 @@ class User extends Model
     $this->attributes['password'] = Hash::make($password);
   }
 
-  public function scopeQuery($query, $text)
+  public function scopeWithSearch($query, $search)
   {
     $columns = ['username', 'email', 'name', 'id'];
     foreach ($columns as $column) {
-      $query->orWhere($column, 'like', '%' . $text . '%');
+      $query->orWhere($column, 'like', "%$search%");
     }
 
     return $query;

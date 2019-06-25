@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
 
 	public function createTestAdmin()
 	{
-		for ($i = 1; $i < 100; $i++) {
+		for ($i = 1; $i <= 1; $i++) {
 			$user = new User;
 			$user->type = 'admin';
 			$user->name = "管理员 $i";
