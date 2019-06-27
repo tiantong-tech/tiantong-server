@@ -35,9 +35,14 @@ class SaleTrackController extends Controller
 
   public function delete()
   {
-    $id = $this->get('id', 'required|exists:sale_tracks,id');
+    $id = $this->get('id', 'exists:sale_tracks,id');
+    $ids = $this->get('ids', 'array');
 
-    SaleTrack::where('id', $id)->delete($id);
+    if ($id) {
+      SaleTrack::where('id', $id)->delete();
+    } else if ($ids) {
+      SaleTrack::whereIn('id', $ids)->delete();
+    }
 
     return $this->success('success_to_delete_sale_track');
   }

@@ -20,5 +20,19 @@ class SaleTrack extends Model
     'type', 'status', 'name',
     'phone', 'email', 'message', 'data',
     'company', 'phone_number'
-	];
+  ];
+
+  public function scopeWithSearch($query, $search)
+  {
+    $columns = [
+      'name', 'email', 'message',
+      'data', 'company', 'phone_number'
+    ];
+
+    foreach ($columns as $column) {
+      $query->orWhere($column, 'like', "%$search%");
+    }
+
+    return $query;
+  }
 }
