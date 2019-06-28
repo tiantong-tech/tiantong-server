@@ -51,6 +51,7 @@ class SaleTrackController extends Controller
   {
     $id = $this->get('id', 'required|exists:sale_tracks,id');
     $data = $this->via([
+      'data' => 'nullable',
       'name' => 'nullable|string',
       'email' => 'nullable|email',
       'message' => 'nullable|string',
@@ -71,10 +72,15 @@ class SaleTrackController extends Controller
   public function search()
   {
     $search = $this->get('search', 'nullable|string');
+    $status = $this->get('status', ['nullable', Rule::in(Enums::saleTrackStatuses)]);
     $query = SaleTrack::orderBy('id', 'desc');
     if ($search) {
       $query->withSearch($search);
     }
+    if ($status) {
+      $query->where('status', $status);
+    }
+
     return $query->paginate();
   }
 }
