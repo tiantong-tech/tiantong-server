@@ -19,7 +19,7 @@ class SaleTrack extends Model
 	protected $fillable = [
     'type', 'status', 'name',
     'phone', 'email', 'message', 'data',
-    'company', 'phone_number'
+    'company', 'phone_number', 'project_name'
   ];
 
   public function scopeWithSearch($query, $search)
