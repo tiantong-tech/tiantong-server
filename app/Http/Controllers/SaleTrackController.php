@@ -14,7 +14,7 @@ class SaleTrackController extends Controller
 
     $filling = $this->via([
       'name' => 'nullable|string',
-      'email' => 'nullable|email',
+      'email' => 'nullable|string',
       'message' => 'nullable|string',
       'company' => 'nullable|string',
       'phone_number' => 'nullable|string',
