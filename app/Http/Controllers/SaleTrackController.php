@@ -53,7 +53,7 @@ class SaleTrackController extends Controller
     $data = $this->via([
       'data' => 'nullable',
       'name' => 'nullable|string',
-      'email' => 'nullable|email',
+      'email' => 'nullable|string',
       'message' => 'nullable|string',
       'company' => 'nullable|string',
       'phone_number' => 'nullable|string',
