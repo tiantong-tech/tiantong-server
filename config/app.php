@@ -231,6 +231,7 @@ return [
         'Series' => App\Facades\Series::class,
         'Transaction' => App\Facades\Transaction::class,
         'Auth' => App\Facades\Auth::class,
+        'Qiniu' => App\Facades\Qiniu::class,
     ],
 
 ];
