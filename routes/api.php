@@ -40,3 +40,6 @@ Route::middleware('auth:root,admin,sale')->group(function() {
 	Route::post('/sale/tracks/update', 'SaleTrackController@update');
 	Route::post('/sale/tracks/search', 'SaleTrackController@search');
 });
+
+Route::post('/devices/create', 'AccessRecordController@generateDeviceKey');
+Route::post('/yuchuan/access/record', 'AccessRecordController@accessRecord');
