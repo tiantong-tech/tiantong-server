@@ -9,7 +9,7 @@ class CreateAccessRecordsTable extends Migration
     public function up()
     {
         Schema::create('access_records', function (Blueprint $table) {
-            $table->string('device_id')->nullable();
+            $table->bigInteger('device_id');
             $table->bigInteger('ip_id');
             $table->string('name')->nullable();
             $table->string('type')->nullable();
