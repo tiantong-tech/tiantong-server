@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Hash;
 use Request;
 use Carbon\Carbon;
@@ -12,6 +13,68 @@ use App\Models\AccessRecord;
 
 class AccessRecordController extends Controller
 {
+  public function getDevices()
+  {
+    $columns = [
+      'd.id',
+      DB::raw('count(distinct(ar.ip_id)) as ips'),
+      DB::raw('count(ar) as counts'),
+      DB::raw('count(distinct(ar.resource)) as resources'),
+      'd.created_at',
+      DB::raw('max(ar.created_at) as last_recorded_at')
+    ];
+
+    $data = DB::table('devices as d')
+      ->select($columns)
+      ->orderBy('counts', 'desc')
+      ->leftJoin('access_records as ar', 'ar.device_id', 'd.id')
+      ->groupBy('d.id')
+      ->page();
+
+    return $data;
+  }
+
+  public function getIPs()
+  {
+    $columns = [
+      'ip.id', 'ip.address', 'ip.province', 'ip.city',
+      DB::raw('count(ar) as counts'),
+      DB::raw('count(distinct(ar.device_id)) as devices'),
+      DB::raw('count(distinct(ar.resource)) as resources'),
+      DB::raw('min(ar.created_at) as created_at'),
+      DB::raw('max(ar.created_at) as last_recorded_at')
+    ];
+
+    $data = DB::table('ip')
+      ->select($columns)
+      ->orderBy('counts', 'desc')
+      ->leftJoin('access_records as ar', 'ar.ip_id', 'ip.id')
+      ->groupBy('ip.id')
+      ->page();
+
+    return $data;
+  }
+
+  public function searchAccessRecords()
+  {
+    $columns = [
+      'ip.address as ip', 'ip.province', 'ip.city',
+      'name', 'type', 'resource',
+      'ar.created_at'
+    ];
+    // $data = AccessRecord::with('ip')
+    //   ->select('ip.address as ip')
+    //   ->paginate();
+
+    $data = DB::table('access_records as ar')
+      ->select($columns)
+      ->orderBy('ar.created_at', 'desc')
+      ->leftJoin('ip', 'ip.id', 'ar.ip_id')
+      ->page();
+
+    return $data;
+  }
+
   /**
    * 生成设备 key
    * 调用后将生成一个唯一的设备 key
