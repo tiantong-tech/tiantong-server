@@ -15,11 +15,14 @@ class UserSeeder extends Seeder
 
 	public function createRoot()
 	{
+		$username = env('ROOT_USERNAME', 'root');
+		$password = env('ROOT_PASSWORD', '123456');
+
 		$user = new User;
 		$user->type = 'root';
-		$user->name = 'ROOT';
-		$user->username = 'root';
-		$user->password = '123456';
+		$user->name = 'root';
+		$user->username = $username;
+		$user->password = $password;
 		$user->email = 'root@tiantong.com';
 		$user->save();
 	}
