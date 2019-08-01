@@ -51,6 +51,10 @@ Route::middleware('auth:root,admin,sale')->group(function () {
 });
 
 Route::middleware('auth:root,admin,sale')->group(function () {
-	Route::post('/news/qiniu/token', 'NewsController@getUploadToken')->middleware('auth');
-	Route::post('/news/search', 'NewsController@search')->middleware('auth');	
+	Route::post('/news/qiniu/token', 'NewsController@getUploadToken');
+	Route::post('/news/search', 'NewsController@search');
+	Route::post('/news/create', 'NewsController@create');
+	Route::post('/news/update', 'NewsController@update');
+	Route::post('/news/delete', 'NewsController@delete');
+	Route::post('/news/detail', 'NewsController@find');
 });
