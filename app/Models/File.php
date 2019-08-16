@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use App\Override\Model;
+
+/**
+ * 文件上传
+ * 1. 创建一条 file 数据，返回上传凭证及 file_id
+ * 2. 客户端调用第三方服务执行上传
+ * 3. 上传完毕后，更新 file 状态为“已上传”，上传流程结束
+ * 4. 如果创建 file 数据后，未更新 file 状态，超过 1 小时则表示上传失败
+ * 5. 上传失败的文件数据为废弃数据，随时可以进行清理
+ */
+
+class File extends Model
+{
+  public $table = 'files';
+
+  protected $fillable = [
+    'name', 'link', 'status'
+  ];
+}
