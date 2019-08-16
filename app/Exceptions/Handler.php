@@ -53,7 +53,10 @@ class Handler extends ExceptionHandler
 			Transaction::rollback();
 		}
 
-		if ($e instanceof CustomerExpection) {
+		if (
+			$e instanceof HttpException ||
+			$e instanceof CustomerExpection
+		) {
 			return $e->response;
 		}
 
