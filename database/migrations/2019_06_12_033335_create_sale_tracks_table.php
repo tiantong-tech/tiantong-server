@@ -12,9 +12,8 @@ class CreateSaleTracksTable extends Migration
         Schema::create('sale_tracks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamp('created_at')->useCurrent();
-            $table->enum('status', Enums::saleTrackStatuses)->default('确认中');
-
-            $table->enum('type', Enums::saleTrackTypes);
+            $table->string('status')->default('确认中');
+            $table->string('type');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('message')->nullable();
