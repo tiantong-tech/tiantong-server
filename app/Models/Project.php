@@ -25,4 +25,9 @@ class Project extends Model
     'activity_ids' => 'array',
     'design_schema_ids' => 'array',
   ];
+
+  public function design_schemas()
+  {
+    return $this->hasMany(DesignSchema::class);
+  }
 }

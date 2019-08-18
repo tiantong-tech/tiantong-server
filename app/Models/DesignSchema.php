@@ -19,4 +19,14 @@ class DesignSchema extends Model
     'quotation_ids' => 'array',
     'cad_drawing_ids' => 'array',
   ];
+
+  public function cad_drawings()
+  {
+    return $this->hasMany(CadDrawing::class);
+  }
+
+  public function quotations()
+  {
+    return $this->hasMany(Quotation::class);
+  }
 }
