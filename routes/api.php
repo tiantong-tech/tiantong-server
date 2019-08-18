@@ -24,7 +24,7 @@ Route::post('/login/username', 'PersonController@loginByUsername');
 Route::middleware('auth:root,admin')->group(function() {
 	Route::post('/users/search', 'UserController@search');
 	Route::post('/users/create', 'UserController@create');
-	Route::post('/users/delete', 'UserController@delete');	
+	Route::post('/users/delete', 'UserController@delete');
 });
 
 Route::middleware('auth')->group(function() {
@@ -57,4 +57,41 @@ Route::middleware('auth:root,admin,sale')->group(function () {
 	Route::post('/news/update', 'NewsController@update');
 	Route::post('/news/delete', 'NewsController@delete');
 	Route::post('/news/detail', 'NewsController@find');
+});
+
+Route::middleware('auth')->group(function () {
+	Route::post('/files/update', 'FileController@update');
+	Route::post('/files/upload/confirm', 'FileController@uploadConfirm');
+});
+
+Route::middleware('auth')->group(function () {
+	Route::post('/activities/update', 'FileController@update');
+});
+
+Route::middleware('auth')->group(function () {
+  Route::post('/projects/search', 'ProjectController@search');
+  Route::post('/projects/create', 'ProjectController@create');
+  Route::post('/projects/update', 'ProjectController@update');
+  Route::post('/projects/delete', 'ProjectController@delete');
+});
+
+Route::middleware('auth')->group(function () {
+  Route::post('/design/schemas/search', 'DesignSchemaController@search');
+  Route::post('/design/schemas/create', 'DesignSchemaController@create');
+  Route::post('/design/schemas/update', 'DesignSchemaController@update');
+  Route::post('/design/schemas/delete', 'DesignSchemaController@delete');
+});
+
+Route::middleware('auth')->group(function () {
+  Route::post('/cad/drawings/search', 'CadDrawingController@search');
+  Route::post('/cad/drawings/create', 'CadDrawingController@create');
+  Route::post('/cad/drawings/update', 'CadDrawingController@update');
+  Route::post('/cad/drawings/delete', 'CadDrawingController@delete');
+});
+
+Route::middleware('auth')->group(function () {
+  Route::post('/quotations/search', 'QuotationController@search');
+  Route::post('/quotations/create', 'QuotationController@create');
+  Route::post('/quotations/update', 'QuotationController@update');
+  Route::post('/quotations/delete', 'QuotationController@delete');
 });
