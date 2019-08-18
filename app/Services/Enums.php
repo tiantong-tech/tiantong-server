@@ -16,4 +16,20 @@ class Enums
     '确认中', '已确认', '拜访中',
     '投标中', '已投标', '已取消', '已归档',
   ];
+
+  const fileStatus = [
+    'uploading', 'uploaded'
+  ];
+
+  const projectTypes = [
+    'sale'
+  ];
+
+  const designSchemaTypes = [
+    'hoister'
+  ];
+
+  const quotationTypes = [
+    'mechanics', 'electronic control', 'engineering'
+  ];
 }
