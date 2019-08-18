@@ -23,11 +23,27 @@ class Controller extends BaseController
 		return $params;
 	}
 
-	public function via(array $rules)
+	public function via(array $rules, $default = false)
 	{
-		$params = request(array_keys($rules));
+    $params = request(array_keys($rules));
+    if ($default !== false) {
+      foreach ($rules as $key => $rule) {
+        if (!isset($params[$key])) {
+          $params[$key] = $default;
+        }
+      }
+    }
 
-		return $this->viaParams($params, $rules);
+    $result = $this->viaParams($params, $rules);
+    if ($default !== false) {
+      foreach ($result as &$item) {
+        if ($item === null) {
+          $item = $default;
+        }
+      }
+    }
+
+    return $result;
 	}
 
 	public function all()
@@ -37,7 +53,7 @@ class Controller extends BaseController
 
 	public function get($name, $rule = 'nullable', $default = null)
 	{
-		$params = request([$name]);
+    $params = request([$name]);
 		$this->viaParams($params, [$name => $rule]);
 		$param = isset($params[$name]) ? $params[$name] : $default;
 
