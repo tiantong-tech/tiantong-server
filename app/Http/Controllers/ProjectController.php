@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Transaction;
 use App\Services\Enums;
 use App\Models\Project;
@@ -61,6 +62,18 @@ class ProjectController extends Controller
     Transaction::commit();
 
     return $this->success('success to delete project');
+  }
+
+  public function detail()
+  {
+    $id = $this->get('project_id', 'required');
+    $project = Project::with([
+      'design_schemas',
+      'design_schemas.quotations',
+      'design_schemas.cad_drawings',
+    ])->find($id);
+
+    return $project;
   }
 
   protected function getData($default = false)

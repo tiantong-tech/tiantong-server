@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+  Route::post('/projects/detail', 'ProjectController@detail');
   Route::post('/projects/search', 'ProjectController@search');
   Route::post('/projects/create', 'ProjectController@create');
   Route::post('/projects/update', 'ProjectController@update');
