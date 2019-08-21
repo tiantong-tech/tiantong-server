@@ -28,14 +28,12 @@ class CadDrawingController extends Controller
     $drawing->project_id = $schema->project_id;
     $drawing->deadline = $deadline;
 
-    Transaction::begin();
     $drawing->save();
-    DesignSchema::where('id', $schema->id)->update([
-      'cad_drawing_ids' => DB::raw("cad_drawing_ids || $drawing->id")
-    ]);
-    Transaction::commit();
 
-    return $this->success('success to add design schema');
+    return $this->success([
+      'message' => 'success to create cad drawing',
+      'cad_drawing_id' => $drawing->id
+    ]);
   }
 
   public function update()
@@ -43,7 +41,7 @@ class CadDrawingController extends Controller
     $drawing = $this->getCadDrawing();
     $deadline = $this->get('deadline', 'nullable');
     $offeredAt = $this->get('offered_at', 'nullable');
-    $data = $this->get([
+    $data = $this->via([
       'deadline' => 'nullable',
       'offered_at' => 'nullable'
     ]);
@@ -58,12 +56,7 @@ class CadDrawingController extends Controller
   {
     $drawing = $this->getCadDrawing();
 
-    Transaction::begin();
     $drawing->delete();
-    DesignSchema::where('id', $drawing->design_schema_id)->update([
-      'cad_drawing_ids' => DB::raw("array_remove(cad_drawing_ids, $drawing->id)")
-    ]);
-    Transaction::commit();
 
     return $this->success('success to delete project');
   }

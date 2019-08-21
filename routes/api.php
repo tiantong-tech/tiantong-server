@@ -22,6 +22,7 @@ Route::post('/login/email', 'PersonController@loginByEmail');
 Route::post('/login/username', 'PersonController@loginByUsername');
 
 Route::middleware('auth:root,admin')->group(function() {
+	Route::post('/users/get', 'UserController@getUsers');
 	Route::post('/users/search', 'UserController@search');
 	Route::post('/users/create', 'UserController@create');
 	Route::post('/users/delete', 'UserController@delete');

@@ -53,4 +53,14 @@ class UserController extends Controller
 
     return $query->paginate();
   }
+
+  public function getUsers()
+  {
+    $selects = [
+      'id', 'name', 'email',
+      'username', 'groups', 'phone_number',
+    ];
+
+    return User::select($selects)->get();
+  }
 }

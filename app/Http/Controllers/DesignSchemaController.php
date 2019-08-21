@@ -23,26 +23,32 @@ class DesignSchemaController extends Controller
   public function create()
   {
     $type = $this->get('type', Rule::in(Enums::designSchemaTypes), 'hoister');
-    $data = $this->getInputData('');
+    $isCompleted = $this->get('is_completed', 'boolean', false);
+    $input = $this->getInputData('');
+    $data = request('data');
     $project = $this->getProject();
     $schema = new DesignSchema;
     $schema->project_id = $project->id;
-    $schema->fill($data);
+    $schema->is_completed = $isCompleted;
+    $schema->data = $data;
+    $schema->fill($input);
     $schema->type = $type;
 
     Transaction::begin();
     $schema->save();
     Project::where('id', $project->id)->update([
-      'design_schema_ids' => DB::raw("design_schema_ids || $schema->id")
+      'design_schema_ids' => DB::raw("design_schema_ids || $schema->id::bigInt")
     ]);
     Transaction::commit();
 
-    return $this->success('success to add design schema');
+    return $this->success([
+      'message' => 'success to add design schema',
+      'schema_id' => $schema->id
+    ]);
   }
 
   public function update()
   {
-    $project = $this->getProject();
     $schema = $this->getDesignSchema();
 
     $data = $this->via([
@@ -50,6 +56,7 @@ class DesignSchemaController extends Controller
       'name' => 'string',
       'notes' => 'string',
       'company' => 'string',
+      'is_completed' => 'boolean',
       'customer_information' => 'string',
     ]);
 
@@ -68,7 +75,7 @@ class DesignSchemaController extends Controller
     Quotation::where('design_schema_id', $schema->id)->delete();
     CadDrawing::where('design_schema_id', $schema->id)->delete();
     Project::where('id', $schema->project_id)->update([
-      'design_schema_ids' => DB::raw("array_remove(design_schema_ids, $schema->id)")
+      'design_schema_ids' => DB::raw("array_remove(design_schema_ids, $schema->id::bigInt)")
     ]);
     Transaction::commit();
 
@@ -80,7 +87,7 @@ class DesignSchemaController extends Controller
     return $this->via([
       'quantity' => 'string',
       'name' => 'string',
-      'data' => 'json'
+      'notes' => 'string'
     ], $default);
   }
 }

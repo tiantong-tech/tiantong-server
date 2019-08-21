@@ -21,39 +21,54 @@ class QuotationController extends Controller
 
   public function create()
   {
-    $type = $this->get('type', Rule::in(Enums::quotationTypes), 'mechanics');
+    // $type = $this->get('type', Rule::in(Enums::quotationTypes), 'mechanics');
     $name = $this->get('name', 'string', '');
     $content = $this->get('content', 'string', '');
     $deadline = $this->get('deadline', 'nullable');
     $schema = $this->getDesignSchema();
-    $quotation = new Quotation;
-    $quotation->type = $type;
-    $quotation->name = $name;
-    $quotation->content = $content;
-    $quotation->deadline = $deadline;
-    $quotation->project_id = $schema->project_id;
-    $quotation->design_schema_id = $schema->id;
 
+    $quotations = [];
+    $types = ['mechanics', 'electronic_control', 'engineering'];
+    foreach ($types as $type) {
+      $quotation = new Quotation;
+      $quotation->type = $type;
+      $quotation->name = $name;
+      $quotation->content = $content;
+      $quotation->deadline = $deadline;
+      $quotation->design_schema_id = $schema->id;
+      $quotation->project_id = $schema->project_id;
+      $quotations[] = $quotation;
+    }
     Transaction::begin();
-    $quotation->save();
+    $data = [];
+    $ids = [];
+    foreach ($quotations as $quotation) {
+      $quotation->save();
+      $ids[] = $quotation->id;
+      $data[] = "$quotation->id::bigint";
+    }
+    $data = "array[" . implode(", ", $data) . "]";
     DesignSchema::where('id', $schema->id)->update([
-      'quotation_ids' => DB::raw("quotation_ids || $quotation->id")
+      'quotation_ids' => DB::raw("quotation_ids || $data")
     ]);
     Transaction::commit();
 
-    return $this->success('success to add quotation');
+    return $this->success([
+      'message' => 'success to add quotation',
+      'quotation_ids' => $ids
+    ]);
   }
 
   public function update()
   {
     $quotation = $this->getQuotation();
-    $name = $this->get('name', 'string', '');
-    $content = $this->get('content', 'string', '');
-    $deadline = $this->get('deadline', 'nullable');
-
-    $quotation->name = $name;
-    $quotation->content = $content;
-    $quotation->deadline = $deadline;
+    $data = $this->via([
+      'name' => 'string',
+      'content' => 'string',
+      'deadline' => 'string',
+      'offered_at' => 'nullable'
+    ]);
+    $quotation->fill($data);
     $quotation->save();
 
     return $this->success('success to update quotation information');
@@ -66,7 +81,7 @@ class QuotationController extends Controller
     Transaction::begin();
     $quotation->delete();
     DesignSchema::where('id', $quotation->design_schema_id)->update([
-      'quotation_ids' => DB::raw("array_remove(quotation_ids, $quotation->id)")
+      'quotation_ids' => DB::raw("array_remove(quotation_ids, $quotation->id::bigint)")
     ]);
     Transaction::commit();
 

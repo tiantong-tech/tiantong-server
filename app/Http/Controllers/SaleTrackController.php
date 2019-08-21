@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Enums;
-use App\Models\SaleTrack; 
+use App\Models\SaleTrack;
 use Illuminate\Validation\Rule;
 
 class SaleTrackController extends Controller

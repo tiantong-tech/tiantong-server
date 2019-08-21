@@ -17,7 +17,13 @@ class ProjectController extends Controller
 
   public function search()
   {
-    return Project::all();
+    return Project::from('projects as p')
+      ->select('p.*')
+      ->addSelect(DB::raw('jsonb_agg(users.name) as members'))
+      ->leftJoin('users', 'p.member_ids', '@>', DB::raw('ARRAY[users.id]'))
+      ->orderBy('p.created_at', 'desc')
+      ->groupBy('p.id')
+      ->paginate();
   }
 
   public function create()
@@ -25,11 +31,13 @@ class ProjectController extends Controller
     $data = $this->getData('');
     $attrs = $this->getAttrs();
     $type = $this->get('type', Rule::in(Enums::projectTypes), 'sale');
+    $saleType = $this->get('sale_type', RUle::in(Enums::projectSaleTypes));
 
     $project = new Project;
     $project->fill($data);
     $project->fill($attrs);
     $project->type = $type;
+    $project->sale_type = $saleType;
     $project->save();
 
     return $this->success([
@@ -67,11 +75,22 @@ class ProjectController extends Controller
   public function detail()
   {
     $id = $this->get('project_id', 'required');
-    $project = Project::with([
-      'design_schemas',
+
+    $with = [
+      'design_schemas:*',
       'design_schemas.quotations',
-      'design_schemas.cad_drawings',
-    ])->find($id);
+      'design_schemas.cad_drawing',
+    ];
+    $project = Project::with($with)
+      ->select('projects.*')
+      ->addSelect(DB::raw('jsonb_agg(users.name) as members'))
+      ->leftJoin('users', 'projects.member_ids', '@>', DB::raw('ARRAY[users.id]'))
+      ->groupBy('projects.id')
+      ->find($id);
+
+    if (!$project) {
+      return $this->failure('fail to find project by id', 404);
+    }
 
     return $project;
   }
@@ -91,6 +110,7 @@ class ProjectController extends Controller
     return $this->via([
       'status' => 'array',
       'member_ids' => 'array',
+      'progress' => 'string'
     ]);
   }
 }
