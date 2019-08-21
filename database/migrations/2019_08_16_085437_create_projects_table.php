@@ -11,6 +11,8 @@ class CreateProjectsTable extends Migration
     Schema::create('projects', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->string('type');
+      $table->string('sale_type')->nullable();
+      $table->string('progress');
 
       $table->string('name');
       $table->string('company');
@@ -22,11 +24,11 @@ class CreateProjectsTable extends Migration
       $table->timestamp('created_at');
     });
 
-    DB::statement("ALTER TABLE projects ADD COLUMN status integer[] DEFAULT '{}'");
-    DB::statement("ALTER TABLE projects ADD COLUMN file_ids integer[] DEFAULT '{}'");
-    DB::statement("ALTER TABLE projects ADD COLUMN activity_ids integer[] DEFAULT '{}'");
-    DB::statement("ALTER TABLE projects ADD COLUMN member_ids integer[] DEFAULT '{}'");
-    DB::statement("ALTER TABLE projects ADD COLUMN design_schema_ids integer[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ADD COLUMN status bigInt[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ADD COLUMN file_ids bigInt[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ADD COLUMN activity_ids bigInt[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ADD COLUMN member_ids bigInt[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ADD COLUMN design_schema_ids bigInt[] DEFAULT '{}'");
   }
 
   public function down()

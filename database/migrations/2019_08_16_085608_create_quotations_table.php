@@ -14,12 +14,14 @@ class CreateQuotationsTable extends Migration
       $table->bigInteger('design_schema_id');
 
       $table->string('type');
-      $table->string('name');
-      $table->text('content');
+      $table->string('name')->default('');
+      $table->text('content')->default('');
 
-      $table->timestamp('deadline')->nullable();
+      $table->timestamp('deadline');
       $table->timestamp('offered_at')->nullable();
       $table->timestamp('created_at');
+
+      $table->unique(['design_schema_id', 'type']);
     });
   }
 

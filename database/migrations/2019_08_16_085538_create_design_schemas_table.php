@@ -22,8 +22,7 @@ class CreateDesignSchemasTable extends Migration
       $table->timestamp('created_at');
     });
 
-    DB::statement("ALTER TABLE design_schemas ADD COLUMN cad_drawing_ids integer[] DEFAULT '{}'");
-    DB::statement("ALTER TABLE design_schemas ADD COLUMN quotation_ids integer[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE design_schemas ADD COLUMN quotation_ids bigInt[] DEFAULT '{}'");
   }
 
   public function down()
