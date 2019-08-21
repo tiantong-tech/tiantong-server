@@ -12,7 +12,8 @@ class Project extends Model
   const UPDATED_AT = null;
 
   protected $fillable = [
-    'type', 'name', 'company',
+    'type', 'object', 'progress',
+    'name', 'company',
     'customer_information', 'notes',
     'delivery_date', 'signature_date',
     'member_ids', 'status',
@@ -21,6 +22,7 @@ class Project extends Model
   protected $casts = [
     'status' => 'array',
     'file_ids' => 'array',
+    'members' => 'json',
     'member_ids' => 'array',
     'activity_ids' => 'array',
     'design_schema_ids' => 'array',

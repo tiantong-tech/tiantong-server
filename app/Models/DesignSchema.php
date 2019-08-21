@@ -12,17 +12,18 @@ class DesignSchema extends Model
   const UPDATED_AT = null;
 
   protected $fillable = [
-    'type', 'name', 'data', 'quantity'
+    'type', 'name', 'data', 'quantity', 'notes',
+    'is_completed'
   ];
 
   protected $casts = [
+    'data' => 'json',
     'quotation_ids' => 'array',
-    'cad_drawing_ids' => 'array',
   ];
 
-  public function cad_drawings()
+  public function cad_drawing()
   {
-    return $this->hasMany(CadDrawing::class);
+    return $this->hasOne(CadDrawing::class);
   }
 
   public function quotations()
