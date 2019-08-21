@@ -25,11 +25,15 @@ class Enums
     'sale'
   ];
 
+  const projectSaleTypes = [
+    'hoister'
+  ];
+
   const designSchemaTypes = [
     'hoister'
   ];
 
   const quotationTypes = [
-    'mechanics', 'electronic control', 'engineering'
+    'mechanics', 'electronic_control', 'engineering'
   ];
 }
