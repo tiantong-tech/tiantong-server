@@ -11,11 +11,6 @@ class AccessRecord extends Model
 {
   public $table = 'access_records';
 
-  const UPDATED_AT = null;
-
   public $timestamps = true;
-
-  public $primaryKey = null;
-
-  public $incrementing = false;
+  const UPDATED_AT = null;
 }
