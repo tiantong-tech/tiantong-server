@@ -48,7 +48,10 @@ Route::post('/yuchuan/access/record', 'AccessRecordController@accessRecord');
 Route::middleware('auth:root,admin,sale')->group(function () {
 	Route::post('/yuchuan/access/ips/search', 'AccessRecordController@getIPs');
 	Route::post('/yuchuan/access/devices/search', 'AccessRecordController@getDevices');
-	Route::post('/yuchuan/access/records/search', 'AccessRecordController@searchAccessRecords');
+  Route::post('/yuchuan/access/records/search', 'AccessRecordController@searchAccessRecords');
+
+  Route::post('/ip/merge', 'AccessRecordController@mergeIP');
+  Route::post('/devices/clear', 'AccessRecordController@clearDevice');
 });
 
 Route::middleware('auth:root,admin,sale')->group(function () {

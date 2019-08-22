@@ -75,6 +75,18 @@ class AccessRecordController extends Controller
     return $data;
   }
 
+  public function clearDevice()
+  {
+    $records = $this->get('records', 'array');
+
+    DB::table('devices')->where
+  }
+
+  public function mergeIP()
+  {
+
+  }
+
   /**
    * 生成设备 key
    * 调用后将生成一个唯一的设备 key
