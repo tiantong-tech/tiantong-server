@@ -13,22 +13,6 @@ use App\Models\AccessRecord;
 
 class AccessRecordController extends Controller
 {
-  public function clearDevice()
-  {
-    $records = $this->get('records', 'integer', 1);
-
-    $ids = DB::table('devices as d')
-      ->leftJoin('access_records as ar', 'ar.device_id', 'd.id')
-      ->groupBy('d.id')
-      ->havingRaw('count(ar.device_id) < ?', [$records])
-      ->pluck('id');
-
-    DB::table('devices')->whereIn('id', $ids)->update(['is_deleted' => true]);
-    DB::table('access_records')->whereIn('device_id', $ids)->delete();
-
-    return $this->success('success to clear devices');
-  }
-
   public function devicesBlacklistScan()
   {
     $agents = DB::table('devices as d')
@@ -112,7 +96,7 @@ class AccessRecordController extends Controller
 
     return $this->success([
       'message' => 'success to clear device blacklist',
-      'deleted' => $rows
+      'devices' => $rows
     ]);
   }
 

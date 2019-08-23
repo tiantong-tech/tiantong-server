@@ -46,7 +46,7 @@ Route::post('/devices/create', 'AccessRecordController@generateDeviceKey');
 Route::post('/yuchuan/access/record', 'AccessRecordController@accessRecord');
 
 Route::middleware('auth:root,admin,sale')->group(function () {
-  Route::post('/devices/blacilist/scan', 'AccessRecordController@devicesBlacklistScan');
+  Route::post('/devices/blacklist/scan', 'AccessRecordController@devicesBlacklistScan');
   Route::post('/devices/blacklist/confirm', 'AccessRecordController@devicesBlackListConfirm');
   Route::post('/devices/blacklist/clear', 'AccessRecordController@devicesBlackListClear');
 
