@@ -13,6 +13,109 @@ use App\Models\AccessRecord;
 
 class AccessRecordController extends Controller
 {
+  public function clearDevice()
+  {
+    $records = $this->get('records', 'integer', 1);
+
+    $ids = DB::table('devices as d')
+      ->leftJoin('access_records as ar', 'ar.device_id', 'd.id')
+      ->groupBy('d.id')
+      ->havingRaw('count(ar.device_id) < ?', [$records])
+      ->pluck('id');
+
+    DB::table('devices')->whereIn('id', $ids)->update(['is_deleted' => true]);
+    DB::table('access_records')->whereIn('device_id', $ids)->delete();
+
+    return $this->success('success to clear devices');
+  }
+
+  public function devicesBlacklistScan()
+  {
+    $agents = DB::table('devices as d')
+      ->whereNotExists(function ($query) {
+        $query->select(DB::raw(1))
+          ->from('access_records as ar')
+          ->whereRaw('ar.device_id = d.id');
+      })
+      ->whereNotExists(function ($query) {
+        $query->select(DB::raw(1))
+          ->from('device_blacklist as db')
+          ->whereRaw('db.user_agent = d.user_agent');
+      })
+      ->distinct()
+      ->pluck('user_agent');
+
+    $data = [];
+    $now = Carbon::now();
+    foreach ($agents as $agent) {
+      $data[] = [
+        'user_agent' => $agent,
+        'created_at' => $now
+      ];
+    }
+    DB::table('device_blacklist')->insert($data);
+
+    return $this->success([
+      'message' => 'success_to_scan_devices',
+      'devices' => sizeof($agents)
+    ]);
+  }
+
+  public function devicesBlackListConfirm()
+  {
+    /**
+     * 1. 对 is_confirmed 为 false 的名单执行确认
+     * 2. 如果该 user_agent 出现访问量 (access_records 中存在记录)，则移除黑名单
+     * 3. 否则，如果超过观察期，将其确认
+     * 3. 如果 device not exists，超过观察期将其确认
+     */
+    function getQuery () {
+      return DB::table('device_blacklist as db')
+        ->where('is_confirmed', false);
+    }
+    $exists = function ($query) {
+      $query->select(DB::raw(1))
+        ->from('devices as d')
+        ->whereRaw('d.user_agent = db.user_agent')
+        ->whereExists(function ($query) {
+          $query->select(DB::raw(1))
+          ->from('access_records as ar')
+          ->whereRaw('ar.device_id = d.id');
+        });
+    };
+
+    $unconfirmed = getQuery()
+      ->whereExists($exists)
+      ->delete();
+    $confirmed = getQuery()
+      ->whereNotExists($exists)
+      ->where('created_at', '<=', Carbon::now())
+      ->update(['is_confirmed' => true]);
+
+    return $this->success([
+      'message' => 'success to confirm device blacklist',
+      'confirmed' => $confirmed,
+      'unconfirmed' => $unconfirmed
+    ]);
+  }
+
+  public function devicesBlackListClear()
+  {
+    $rows = DB::table('devices as d')
+      ->whereExists(function ($query) {
+        $query->select(DB::raw(1))
+          ->from('device_blacklist as db')
+          ->where('is_confirmed', true)
+          ->whereRaw('db.user_agent = d.user_agent');
+      })
+      ->delete();
+
+    return $this->success([
+      'message' => 'success to clear device blacklist',
+      'deleted' => $rows
+    ]);
+  }
+
   public function getDevices()
   {
     $columns = [
@@ -75,18 +178,6 @@ class AccessRecordController extends Controller
     return $data;
   }
 
-  public function clearDevice()
-  {
-    $records = $this->get('records', 'array');
-
-    DB::table('devices')->where
-  }
-
-  public function mergeIP()
-  {
-
-  }
-
   /**
    * 生成设备 key
    * 调用后将生成一个唯一的设备 key
@@ -125,7 +216,7 @@ class AccessRecordController extends Controller
     $record->ip_id = $this->recordIp(Request::ip());
     $record->device_id = $device->id;
     $record->resource = $resource;
-    $record->name = 'yuchuan';
+    $record->name = 'yuchdbn';
     $record->type = $type ? $type : 'page';
     $record->save();
 

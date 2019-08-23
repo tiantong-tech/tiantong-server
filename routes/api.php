@@ -46,12 +46,13 @@ Route::post('/devices/create', 'AccessRecordController@generateDeviceKey');
 Route::post('/yuchuan/access/record', 'AccessRecordController@accessRecord');
 
 Route::middleware('auth:root,admin,sale')->group(function () {
+  Route::post('/devices/blacilist/scan', 'AccessRecordController@devicesBlacklistScan');
+  Route::post('/devices/blacklist/confirm', 'AccessRecordController@devicesBlackListConfirm');
+  Route::post('/devices/blacklist/clear', 'AccessRecordController@devicesBlackListClear');
+
 	Route::post('/yuchuan/access/ips/search', 'AccessRecordController@getIPs');
 	Route::post('/yuchuan/access/devices/search', 'AccessRecordController@getDevices');
   Route::post('/yuchuan/access/records/search', 'AccessRecordController@searchAccessRecords');
-
-  Route::post('/ip/merge', 'AccessRecordController@mergeIP');
-  Route::post('/devices/clear', 'AccessRecordController@clearDevice');
 });
 
 Route::middleware('auth:root,admin,sale')->group(function () {
