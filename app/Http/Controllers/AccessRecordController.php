@@ -73,7 +73,7 @@ class AccessRecordController extends Controller
       ->delete();
     $confirmed = getQuery()
       ->whereNotExists($exists)
-      ->where('created_at', '<=', Carbon::now())
+      ->where('created_at', '<=', Carbon::now()->subMonth(1))
       ->update(['is_confirmed' => true]);
 
     return $this->success([
