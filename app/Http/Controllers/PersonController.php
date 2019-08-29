@@ -23,6 +23,7 @@ class PersonController extends Controller
   {
     $user = Auth::user();
     $user->fill($this->all());
+    $user->save();
 
     return $this->success('success_to_update_user');
   }
