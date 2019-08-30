@@ -9,12 +9,14 @@ class CreateFilesTable extends Migration
   public function up()
   {
     Schema::create('files', function (Blueprint $table) {
-      $table->bigIncrements('id');
+      $table->increments('id');
       $table->bigInteger('user_id');
       $table->string('namespace');
       $table->string('name');
-      $table->string('link');
-      $table->string('status');
+      $table->string('comment')->default('');
+      $table->integer('size')->default(0);
+      $table->string('link')->default('');
+      $table->boolean('is_uploaded')->default(false);
       $table->timestamp('created_at');
       $table->timestamp('deleted_at')->nullable();
     });

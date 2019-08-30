@@ -79,6 +79,10 @@ Route::middleware('auth')->group(function () {
   Route::post('/projects/create', 'ProjectController@create');
   Route::post('/projects/update', 'ProjectController@update');
   Route::post('/projects/delete', 'ProjectController@delete');
+  Route::post('/projects/files/search', 'ProjectController@fileSearch');
+  Route::post('/projects/files/upload', 'ProjectController@fileUpload');
+  Route::post('/projects/files/confirm', 'ProjectController@fileUploadConfirm');
+  Route::post('/projects/files/delete', 'ProjectController@fileDelete');
 });
 
 Route::middleware('auth')->group(function () {

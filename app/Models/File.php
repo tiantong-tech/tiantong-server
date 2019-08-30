@@ -17,7 +17,17 @@ class File extends Model
 {
   public $table = 'files';
 
+  public $timestamps = true;
+  const UPDATED_AT = null;
+
   protected $fillable = [
-    'name', 'link', 'status'
+    'namespace', 'name', 'comment', 'size',
+    'link', 'user_id',
+    'created_at', 'deleted_at'
   ];
+
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }

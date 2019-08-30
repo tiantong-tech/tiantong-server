@@ -29,6 +29,7 @@ class CreateProjectsTable extends Migration
     DB::statement("ALTER TABLE projects ADD COLUMN activity_ids bigInt[] DEFAULT '{}'");
     DB::statement("ALTER TABLE projects ADD COLUMN member_ids bigInt[] DEFAULT '{}'");
     DB::statement("ALTER TABLE projects ADD COLUMN design_schema_ids bigInt[] DEFAULT '{}'");
+    DB::statement("ALTER TABLE projects ALTER COLUMN file_ids TYPE int[]");
   }
 
   public function down()

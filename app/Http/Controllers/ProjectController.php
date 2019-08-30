@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
+use Qiniu;
 use Transaction;
+use Carbon\Carbon;
 use App\Services\Enums;
+use App\Models\File;
 use App\Models\Project;
 use App\Models\Quotation;
 use App\Models\CadDrawing;
@@ -13,6 +17,7 @@ use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
+  use Traits\FileTrait;
   use Traits\ProjectTrait;
 
   public function search()
@@ -93,6 +98,80 @@ class ProjectController extends Controller
     }
 
     return $project;
+  }
+
+  /**
+   * 1. 获取七牛上传 token
+   * 2. 创建 file 数据
+   * 3. 返回 token
+   * 4. 前端上传文件
+   * 5. 前端确认上传
+   */
+  public function fileUpload()
+  {
+    $userId = Auth::user()->id;
+    $data = $this->via([
+      'size' => 'integer',
+      'name' => 'required',
+      'comment' => 'string',
+    ], '');
+
+    $file = new File;
+    $file->fill($data);
+    $file->user_id = $userId;
+    $file->namespace = 'sale_projects';
+    $file->save();
+
+    $token = Qiniu::getUploadToken('tiantong');
+
+    return $this->success([
+      'token' => $token,
+      'file_id' => $file->id
+    ]);
+  }
+
+  public function fileUploadConfirm()
+  {
+    $file = $this->getFile();
+    $project = $this->getProject();
+
+    $file->is_uploaded = true;
+    $file->link = $this->get('link', 'required');
+
+    Transaction::begin();
+    Project::where('id', $project->id)->update([
+      'file_ids' => DB::raw("file_ids || $file->id")
+    ]);
+    $file->save();
+    Transaction::commit();
+
+    return $this->success('success to confirm file upload');
+  }
+
+  public function fileDelete()
+  {
+    $project = $this->getProject();
+    $fileIds = $this->get('file_ids', 'array');
+    $project->file_ids = array_diff($project->file_ids, $fileIds);
+
+    Transaction::begin();
+    $project->save();
+    File::whereIn('id', $fileIds)->update([
+      'deleted_at' => Carbon::now()
+    ]);
+    Transaction::commit();
+
+    return $this->success('success to delete files');
+  }
+
+  public function fileSearch()
+  {
+    $project = $this->getProject();
+    $files = File::with('user:id,name')
+      ->whereIn('id', $project->file_ids)
+      ->get();
+
+    return $files;
   }
 
   protected function getData($default = false)
