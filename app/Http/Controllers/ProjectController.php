@@ -169,6 +169,7 @@ class ProjectController extends Controller
     $project = $this->getProject();
     $files = File::with('user:id,name')
       ->whereIn('id', $project->file_ids)
+      ->orderBy('created_at', 'desc')
       ->get();
 
     return $files;
