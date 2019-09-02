@@ -190,7 +190,9 @@ class ProjectController extends Controller
     return $this->via([
       'status' => 'array',
       'member_ids' => 'array',
-      'progress' => 'string'
+      'progress' => 'string',
+      'delivery_date' => 'date',
+      'signature_date' => 'date',
     ]);
   }
 }
