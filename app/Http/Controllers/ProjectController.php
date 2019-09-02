@@ -22,13 +22,23 @@ class ProjectController extends Controller
 
   public function search()
   {
-    return Project::from('projects as p')
+    $search = $this->get('search', 'nullable|string');
+    $query = Project::from('projects as p')
       ->select('p.*')
-      ->addSelect(DB::raw('jsonb_agg(users.name) as members'))
-      ->leftJoin('users', 'p.member_ids', '@>', DB::raw('ARRAY[users.id]'))
-      ->orderBy('p.created_at', 'desc')
-      ->groupBy('p.id')
-      ->paginate();
+      ->addSelect(DB::raw('jsonb_agg(u.name) as members'))
+      ->leftJoin('users as u', 'p.member_ids', '@>', DB::raw('ARRAY[u.id]'))
+      ->orderBy('p.id', 'asc')
+      ->groupBy('p.id');
+
+    if ($search) {
+      $columns = ['p.name', 'p.company', 'u.name', 'u.email', 'p.id'];
+
+      foreach ($columns as $column) {
+        $query->orWhere($column, 'like', "%$search%");
+      }
+    }
+
+    return $query->paginate();
   }
 
   public function create()
