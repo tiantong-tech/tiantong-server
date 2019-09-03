@@ -4,6 +4,7 @@ namespace App\Override\Exceptions;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -28,6 +29,10 @@ class Handler extends ExceptionHandler
       return $this->handleValidationException($e);
     }
 
+    if ($e instanceof ThrottleRequestsException) {
+      return $this->handleThrottleException();
+    }
+
 		return parent::render($request, $e);
   }
 
@@ -46,5 +51,12 @@ class Handler extends ExceptionHandler
       'errors' => $e->errors(),
       'params' => request()->input(),
     ], 422);
+  }
+
+  private function handleThrottleException()
+  {
+    return response()->json([
+      'msg' => 'stop for a cup of coffee',
+    ], 427);
   }
 }
