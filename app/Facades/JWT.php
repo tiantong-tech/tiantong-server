@@ -2,9 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
-class JWT extends Facade
+class JWT extends _Facade
 {
     protected static function getFacadeAccessor()
     {

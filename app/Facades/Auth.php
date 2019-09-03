@@ -2,9 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
-class Auth extends Facade
+class Auth extends _Facade
 {
 	protected static function getFacadeAccessor()
 	{

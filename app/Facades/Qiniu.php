@@ -2,9 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
-class Qiniu extends Facade
+class Qiniu extends _Facade
 {
   protected static function getFacadeAccessor()
   {

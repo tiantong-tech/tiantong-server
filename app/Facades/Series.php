@@ -2,9 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
-class Series extends Facade
+class Series extends _Facade
 {
     protected static function getFacadeAccessor()
     {

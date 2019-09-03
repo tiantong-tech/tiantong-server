@@ -2,9 +2,7 @@
 
 namespace App\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
-class Transaction extends Facade
+class Transaction extends _Facade
 {
 	protected static function getFacadeAccessor()
 	{
