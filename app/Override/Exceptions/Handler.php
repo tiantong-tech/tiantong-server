@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -21,7 +22,10 @@ class Handler extends ExceptionHandler
 
 	public function render($request, Exception $e)
 	{
-    if ($e instanceof NotFoundHttpException) {
+    if (
+      $e instanceof NotFoundHttpException ||
+      $e instanceof MethodNotAllowedHttpException
+    ) {
       return $this->handleNotfound();
     }
 
