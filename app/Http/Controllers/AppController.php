@@ -7,7 +7,7 @@ class AppController extends _Controller
   public function home()
   {
     return [
-      'message' => '天瞳系统 v1.0'
+      'msg' => '天瞳系统 v1.0'
     ];
   }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Override;
 
-use App\Exceptions\HttpException;
+use App\Override\Exceptions\HttpException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -63,7 +63,7 @@ class Controller extends BaseController
 	public function success($messages, $status = 201)
 	{
 		if (!is_array($messages)) {
-			$messages = ['message' => $messages];
+			$messages = ['msg' => $messages];
 		}
 
 		return response()->json($messages, $status);
@@ -72,7 +72,7 @@ class Controller extends BaseController
 	public function failure($messages, $status = 400)
 	{
 		if (!is_array($messages)) {
-			$messages = ['message' => $messages];
+			$messages = ['msg' => $messages];
 		}
 
 		throw new HttpException($messages, $status);

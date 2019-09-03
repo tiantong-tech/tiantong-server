@@ -31,7 +31,7 @@ class CadDrawingController extends _Controller
     $drawing->save();
 
     return $this->success([
-      'message' => 'success to create cad drawing',
+      'msg' => 'success to create cad drawing',
       'cad_drawing_id' => $drawing->id
     ]);
   }

@@ -39,7 +39,7 @@ class PersonController extends _Controller
     }
 
     return $this->success([
-      'message' => 'success_to_login',
+      'msg' => 'success_to_login',
       'token' => $token
     ]);
   }
@@ -54,7 +54,7 @@ class PersonController extends _Controller
     }
 
     return $this->success([
-      'message' => 'success_to_login',
+      'msg' => 'success_to_login',
       'token' => $token
     ]);
   }

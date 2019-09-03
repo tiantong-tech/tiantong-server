@@ -28,7 +28,7 @@ class SaleTrackController extends _Controller
     $saleTrack->save();
 
     return $this->success([
-      'message' => 'success_to_create_sale_track',
+      'msg' => 'success_to_create_sale_track',
       'id' => $saleTrack->id
     ]);
   }

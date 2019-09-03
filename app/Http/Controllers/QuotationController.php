@@ -54,7 +54,7 @@ class QuotationController extends _Controller
     Transaction::commit();
 
     return $this->success([
-      'message' => 'success to add quotation',
+      'msg' => 'success to add quotation',
       'quotation_ids' => $ids
     ]);
   }

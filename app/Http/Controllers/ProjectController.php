@@ -57,7 +57,7 @@ class ProjectController extends _Controller
 
     return $this->success([
       'project_id' => $project->id,
-      'message' => 'success to create project',
+      'msg' => 'success to create project',
     ]);
   }
 

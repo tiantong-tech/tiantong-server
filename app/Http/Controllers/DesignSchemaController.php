@@ -42,7 +42,7 @@ class DesignSchemaController extends _Controller
     Transaction::commit();
 
     return $this->success([
-      'message' => 'success to add design schema',
+      'msg' => 'success to add design schema',
       'schema_id' => $schema->id
     ]);
   }

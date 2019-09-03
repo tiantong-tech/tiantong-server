@@ -12,7 +12,7 @@ trait FileTrait
     $id = $this->get('file_id');
     $file = File::find($id);
     if (!$file) {
-      throw new HttpException('fail to find file by id', 404);
+      $this->failure('fail to find file by id', 404);
     }
 
     return $file;

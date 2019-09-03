@@ -40,7 +40,7 @@ class AccessRecordController extends _Controller
     DB::table('device_blacklist')->insert($data);
 
     return $this->success([
-      'message' => 'success_to_scan_devices',
+      'msg' => 'success_to_scan_devices',
       'devices' => sizeof($agents)
     ]);
   }
@@ -77,7 +77,7 @@ class AccessRecordController extends _Controller
       ->update(['is_confirmed' => true]);
 
     return $this->success([
-      'message' => 'success to confirm device blacklist',
+      'msg' => 'success to confirm device blacklist',
       'confirmed' => $confirmed,
       'unconfirmed' => $unconfirmed
     ]);
@@ -95,7 +95,7 @@ class AccessRecordController extends _Controller
       ->delete();
 
     return $this->success([
-      'message' => 'success to clear device blacklist',
+      'msg' => 'success to clear device blacklist',
       'devices' => $rows
     ]);
   }
