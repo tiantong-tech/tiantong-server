@@ -3,15 +3,10 @@
 namespace App\Override;
 
 use App\Override\Exceptions\HttpException;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
 	public function viaParams($params, $rules)
 	{
 		$validator = \Validator::make($params, $rules);

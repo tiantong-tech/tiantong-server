@@ -257,7 +257,7 @@ class AccessRecordController extends _Controller
 
   private function getIpLocation($ip)
   {
-    $key = env('GAODE_LOCATION_KEY');
+    $key = env('GAODE_WEB_KEY');
 
     $client = new Client();
     $data = $client
