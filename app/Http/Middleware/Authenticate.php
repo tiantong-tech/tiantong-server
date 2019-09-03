@@ -6,7 +6,7 @@ use JWT;
 use Auth;
 use Closure;
 
-class Authenticate extends Middleware
+class Authenticate
 {
 	public function handle($request, Closure $next, ...$groups)
 	{
