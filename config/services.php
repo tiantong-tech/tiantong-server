@@ -1,17 +1,13 @@
 <?php
 
 return [
-
-  /*
-  |--------------------------------------------------------------------------
-  | Third Party Services
-  |--------------------------------------------------------------------------
-  |
-  | This file is for storing the credentials for third party services such
-  | as Stripe, Mailgun, SparkPost and others. This file provides a sane
-  | default location for this type of information, allowing packages
-  | to have a conventional place to find your various credentials.
-  |
-  */
-
+  'qiniu' => [
+    'deadline' => env('QINIU_DEADLINE', 3600),
+    'secret_key' => env('QINIU_SECRET_KEY'),
+    'access_key' => env('QINIU_ACCESS_KEY'),
+    'bucket' => env('QINIU_BUCKET'),
+  ],
+  'gaode' => [
+    'web.key' => env('GAODE_WEB_KEY')
+  ]
 ];

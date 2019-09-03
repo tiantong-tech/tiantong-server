@@ -18,10 +18,12 @@ class Qiniu
 
   public function __construct()
   {
-    $this->bucket = env('QINIU_BUCKET');
-    $this->deadline = env('QINIU_DEADLINE');
-    $this->accessKey = env('QINIU_ACCESS_KEY');
-    $this->secretKey = env('QINIU_SECRET_KEY');
+    $config = config('services.qiniu');
+
+    $this->bucket = $config['bucket'];
+    $this->deadline = $config['deadline'];
+    $this->accessKey = $config['access_key'];
+    $this->secretKey = $config['secret_key'];
   }
 
   public function getUploadToken($bucket = null, $file = null, $deadline = null)

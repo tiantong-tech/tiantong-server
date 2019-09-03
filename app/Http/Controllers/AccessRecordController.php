@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use DB;
 use Hash;
+use Gaode;
 use Request;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use App\Models\IP;
 use App\Models\Device;
 use App\Models\AccessRecord;
@@ -234,10 +234,10 @@ class AccessRecordController extends _Controller
 
     if (!$ip) {
       // 录入 IP 定位
-      $ip = createIp($address, $this->getIpLocation($address));
+      $ip = createIp($address, Gaode::getIpLocation($address));
     } else if ($ip->updated_at < time() - 3600 * 24) {
       // 检查已录入的 IP 定位
-      $location = $this->getIpLocation($address);
+      $location = Gaode::getIpLocation($address);
       if (
         $location->city === $ip->city &&
         $location->province === $ip->province
@@ -253,25 +253,5 @@ class AccessRecordController extends _Controller
     }
 
     return $ip->id;
-  }
-
-  private function getIpLocation($ip)
-  {
-    $key = env('GAODE_WEB_KEY');
-
-    $client = new Client();
-    $data = $client
-      ->get("https://restapi.amap.com/v3/ip?key=$key&ip=$ip")
-      ->getBody()
-      ->getContents();
-    $data = json_decode($data);
-    $result = [];
-    foreach (['province', 'city'] as $key) {
-      if (gettype($data->$key) !== 'string') {
-        $data->$key = '';
-      }
-    }
-
-    return $data;
   }
 }
