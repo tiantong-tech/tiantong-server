@@ -6,7 +6,7 @@ use Auth;
 use Qiniu;
 use App\Models\News;
 
-class NewsController extends Controller
+class NewsController extends _Controller
 {
 	public function create()
 	{

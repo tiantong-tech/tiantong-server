@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class News extends Model
+class News extends _Model
 {
   public $table = "news";
 

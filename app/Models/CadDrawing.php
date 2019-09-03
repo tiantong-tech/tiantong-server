@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class CadDrawing extends Model
+class CadDrawing extends _Model
 {
   public $table = 'cad_drawings';
 

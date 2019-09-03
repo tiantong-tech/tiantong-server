@@ -9,7 +9,7 @@ use App\Models\File;
 use App\Exceptions\HttpException;
 use App\Http\Controllers\Traits;
 
-class FileController extends Controller
+class FileController extends _Controller
 {
   use Traits\FileTrait;
 

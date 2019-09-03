@@ -6,7 +6,7 @@ use App\Services\Enums;
 use App\Models\SaleTrack;
 use Illuminate\Validation\Rule;
 
-class SaleTrackController extends Controller
+class SaleTrackController extends _Controller
 {
   public function create()
   {

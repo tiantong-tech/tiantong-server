@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Override;
 
 use App\Exceptions\HttpException;
 use Illuminate\Foundation\Bus\DispatchesJobs;

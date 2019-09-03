@@ -4,18 +4,15 @@ namespace App\Models;
 
 use Hash;
 use Series;
-use App\Override\Model;
 // use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends _Model
 {
 	// use Notifiable;
 
   public $table = "users";
-
-  public $timestamps = false;
 
   public $casts = [
     'groups' => 'array'

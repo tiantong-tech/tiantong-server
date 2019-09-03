@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Services\Enums;
 use Illuminate\Validation\Rule;
 
-class UserController extends Controller
+class UserController extends _Controller
 {
   public function create()
   {

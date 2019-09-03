@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use JWT;
 use Auth;
 
-class PersonController extends Controller
+class PersonController extends _Controller
 {
   public function getProfile()
   {

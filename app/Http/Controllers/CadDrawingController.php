@@ -10,7 +10,7 @@ use App\Models\CadDrawing;
 use App\Models\DesignSchema;
 use Illuminate\Validation\Rule;
 
-class CadDrawingController extends Controller
+class CadDrawingController extends _Controller
 {
   use Traits\ProjectTrait;
 

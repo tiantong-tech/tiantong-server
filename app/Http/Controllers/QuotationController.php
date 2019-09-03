@@ -10,7 +10,7 @@ use App\Models\Quotation;
 use App\Models\DesignSchema;
 use Illuminate\Validation\Rule;
 
-class QuotationController extends Controller
+class QuotationController extends _Controller
 {
   use Traits\ProjectTrait;
 

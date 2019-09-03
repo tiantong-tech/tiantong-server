@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class SaleTrack extends Model
+class SaleTrack extends _Model
 {
 	// use Notifiable;
 

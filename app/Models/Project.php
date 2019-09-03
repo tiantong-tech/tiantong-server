@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class Project extends Model
+class Project extends _Model
 {
   public $table = 'projects';
 

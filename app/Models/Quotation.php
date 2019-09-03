@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class Quotation extends Model
+class Quotation extends _Model
 {
   public $table = 'quotations';
 

@@ -5,9 +5,8 @@ namespace App\Models;
 use Hash;
 use Series;
 use Carbon\Carbon;
-use App\Override\Model;
 
-class AccessRecord extends Model
+class AccessRecord extends _Model
 {
   public $table = 'access_records';
 

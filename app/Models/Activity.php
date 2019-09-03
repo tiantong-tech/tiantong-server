@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class Activity extends Model
+class Activity extends _Model
 {
   public $table = 'activities';
 

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class Device extends Model
+class Device extends _Model
 {
   public $table = 'devices';
 

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class DesignSchema extends Model
+class DesignSchema extends _Model
 {
   public $table = 'design_schemas';
 

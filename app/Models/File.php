@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
 /**
  * 文件上传
  * 1. 创建一条 file 数据，返回上传凭证及 file_id
@@ -13,7 +11,7 @@ use App\Override\Model;
  * 5. 上传失败的文件数据为废弃数据，随时可以进行清理
  */
 
-class File extends Model
+class File extends _Model
 {
   public $table = 'files';
 

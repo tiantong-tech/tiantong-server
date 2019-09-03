@@ -11,7 +11,7 @@ use App\Models\IP;
 use App\Models\Device;
 use App\Models\AccessRecord;
 
-class AccessRecordController extends Controller
+class AccessRecordController extends _Controller
 {
   public function devicesBlacklistScan()
   {

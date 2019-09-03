@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Activity;
 use App\Exceptions\HttpException;
 
-class ActivityController extends Controller
+class ActivityController extends _Controller
 {
   public function update()
   {

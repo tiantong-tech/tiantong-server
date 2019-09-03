@@ -11,7 +11,7 @@ use App\Models\CadDrawing;
 use App\Models\DesignSchema;
 use Illuminate\Validation\Rule;
 
-class DesignSchemaController extends Controller
+class DesignSchemaController extends _Controller
 {
   use Traits\ProjectTrait;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Override;
+namespace App\Override\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as BaseBuilder;
 

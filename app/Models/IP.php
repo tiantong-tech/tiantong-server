@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Override\Model;
-
-class IP extends Model
+class IP extends _Model
 {
   public $table = 'ip';
 }
