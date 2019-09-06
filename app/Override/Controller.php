@@ -53,7 +53,16 @@ class Controller extends BaseController
 		$param = isset($params[$name]) ? $params[$name] : $default;
 
 		return $param;
-	}
+  }
+
+  public function getNullable($name, $rule)
+  {
+    if (request($name) === '') {
+      return null;
+    } else {
+      $this->get($name, $rule);
+    }
+  }
 
 	public function success($messages, $status = 201)
 	{

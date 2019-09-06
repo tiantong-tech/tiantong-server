@@ -11,7 +11,7 @@ class UserController extends _Controller
   public function create()
   {
     $name = $this->get('name', 'nullable');
-    $email = $this->get('email', 'nullable|email');
+    $email = $this->getNullable('email', 'nullable|email');
     $username = $this->get('username', 'required');
     $password = $this->get('password', 'required|string');
     $type = $this->get('type', Rule::in(Enums::groups));
@@ -46,7 +46,7 @@ class UserController extends _Controller
   public function search()
   {
     $search = $this->get('search', 'nullable|string');
-    $query = User::orderBy('created_at', 'desc');
+    $query = User::orderBy('id', 'asc');
     if ($search) {
       $query->withSearch($search);
     }
