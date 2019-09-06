@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -29,14 +30,18 @@ class UserSeeder extends Seeder
 
 	public function createTestAdmin()
 	{
-		for ($i = 1; $i <= 1; $i++) {
-			$user = new User;
-			$user->type = 'admin';
-			$user->name = "管理员 $i";
-			$user->username = "test_admin_$i";
-			$user->password = '123456';
-			$user->email = "test_admin_$i@tiantong.com";
-			$user->save();
-		}
+    $data = [];
+		for ($i = 1; $i <= 100; $i++) {
+      $data[] = [
+        'id' => 1000000 + $i,
+        'groups' => "[\"admin\"]",
+        'name' => "测试用户 $i",
+        'username' => "testa_admin_$i",
+        'password' => '123456',
+        'email' => "test_admin_$i@tiantong.com"
+      ];
+    }
+
+    DB::table('users')->insert($data);
 	}
 }

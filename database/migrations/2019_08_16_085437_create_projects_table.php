@@ -10,14 +10,14 @@ class CreateProjectsTable extends Migration
   {
     Schema::create('projects', function (Blueprint $table) {
       $table->bigIncrements('id');
-      $table->string('type');
-      $table->string('sale_type')->nullable();
-      $table->string('progress');
+      $table->string('type')->default('sale');
+      $table->string('sale_type')->default('hoister');
+      $table->string('progress')->default('交流中');
 
-      $table->string('name');
-      $table->string('company');
-      $table->text('customer_information');
-      $table->text('notes');
+      $table->string('name')->default('');
+      $table->string('company')->default('');
+      $table->text('customer_information')->default('');
+      $table->text('notes')->default('');
 
       $table->timestamp('delivery_date')->nullable();
       $table->timestamp('signature_date')->nullable();
