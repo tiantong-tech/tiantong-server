@@ -2,6 +2,7 @@
 
 namespace App\Override\Eloquent;
 
+use App\Services\Postgres;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 abstract class Model extends BaseModel
@@ -20,7 +21,7 @@ abstract class Model extends BaseModel
   {
     switch ($this->getCastType($key)) {
       case 'array':
-        return $this->getArray($value);
+        return Postgres::getArray($value);
       default:
         return parent::castAttribute($key, $value);
     }
@@ -33,7 +34,7 @@ abstract class Model extends BaseModel
   {
     switch ($this->getCastTypeByKey($key)) {
       case 'array':
-        $this->attributes[$key] = $this->setArray($value);
+        $this->attributes[$key] = Postgres::setArray($value);
         break;
       default:
         parent::setAttribute($key, $value);
@@ -52,21 +53,5 @@ abstract class Model extends BaseModel
     } else {
       return null;
     }
-  }
-
-  /**
-   * handle decode postgres array type
-   */
-  protected function getArray($data, $type = 'int')
-  {
-    return json_decode('['.substr($data, 1, -1).']', true);
-  }
-
-  /**
-   * handle encode postgres array type
-   */
-  protected function setArray($data, $type = 'int')
-  {
-    return '{'.implode(',', $data).'}';
   }
 }

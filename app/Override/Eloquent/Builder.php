@@ -9,7 +9,7 @@ class Builder extends BaseBuilder
   public function paginate($pageSize = null, $columns = ['*'], $pageName = 'page', $page = null)
   {
     !$page && ($page = request('page'));
-    !$pageSize && ($pageSize = request('page_size'));
+    !$pageSize && ($pageSize = request('pageSize'));
     !$page && ($page = 1);
     !$pageSize && ($pageSize = 15);
 
@@ -18,9 +18,11 @@ class Builder extends BaseBuilder
       : $this->model->newCollection();
 
     return [
-      'page' => $page,
-      'page_size' => $pageSize,
-      'total' => $total,
+      'meta' => [
+        'page' => $page,
+        'pageSize' => $pageSize,
+        'total' => $total
+      ],
       'data' => $results
     ];
   }

@@ -67,6 +67,7 @@ return [
     'Gaode' => App\Facades\Gaode::class,
     'Qiniu' => App\Facades\Qiniu::class,
     'Series' => App\Facades\Series::class,
+    'Postgres' => App\Facades\Postgres::class,
     'Transaction' => App\Facades\Transaction::class,
   ],
 ];
