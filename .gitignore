@@ -1,13 +1,10 @@
-/node_modules
+.DS_Store
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+!.env.example
 .env
-.env.production
+.env.*
 .phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-.DS_Store
+
